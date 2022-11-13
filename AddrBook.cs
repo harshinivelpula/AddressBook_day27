@@ -168,6 +168,14 @@ namespace AddressBooks
                     Console.WriteLine("Contact is not present");
                 }
             }
+            //  PrintCustomer(person);
+
+            if (Console.ReadKey().Key == ConsoleKey.Y)
+            {
+                people.Remove(person);
+                Console.WriteLine("\nPerson removed ");
+
+            }
         }
     }
 }
