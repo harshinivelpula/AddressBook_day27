@@ -5,8 +5,9 @@
         static void Main(string[] args)
         {
 
-            AddressBooks.AddrBook.GetCustomer();
-            AddressBooks.AddrBook.ListingPeople();
+            //AddressBooks.AddrBook.GetCustomer();
+            AddressBooks.AddrBook.Modify();
+            //AddressBooks.AddrBook.ListingPeople();
 
         }
     }
