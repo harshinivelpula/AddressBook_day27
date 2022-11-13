@@ -51,8 +51,32 @@ namespace AddressBooks
                     Console.WriteLine(member.ToString());
                 }
             }
+             else
+            {
+                //Create object for Json
+                JsonSerializer jsonSerializer = new JsonSerializer();
+                using (StreamWriter stream = new StreamWriter(jsonfilePath))
+                using (JsonWriter jsonWriter = new JsonTextWriter(stream))
+                {
+                    //Converting from List to Json Object
+                    jsonSerializer.Serialize(jsonWriter, addressbooknames);
+                }
+
+                //Reading from Json File-> Converting from Json Object to List
+                Dictionary<string, List<AddrBook>> jsonList = JsonConvert.DeserializeObject<Dictionary<string, List<AddrBook>>>(File.ReadAllText(jsonfilePath));
+                foreach (KeyValuePair<string, List<AddrBook>> i in jsonList)
+                {
+                    Console.WriteLine("\nAddressBook Name: {0}", i.Key);
+                    foreach (var j in i.Value)
+                    {
+                        Console.WriteLine(j.ToString());
+                    }
+
+
+                }
+
+            }
 
         }
-
     }
 }
