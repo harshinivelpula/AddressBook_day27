@@ -9,6 +9,7 @@ namespace AddressBooks
     internal class AddrBook
     {
         public static List<Person> People = new List<Person>();
+
         public class Person
         {
             public string FirstName { get; set; }
@@ -68,45 +69,45 @@ namespace AddressBooks
         //{
         //    if (People.Count != 0)
         //    {
-                //Console.WriteLine("Enter the contact to modify:");
-                //string Modified = Console.ReadLine();
-                //foreach (var person in People)
-                //{
-                //    if (person.FirstName.ToUpper() == Modified.ToUpper())
-                //    {
-                //        while (true)
-                //        {
-                //            Console.WriteLine("Enter the option to modify the property: ");
-                //            Console.WriteLine("Enter 1 to Change First name ");
-                //            Console.WriteLine("Enter 2 to Change Last name ");
-                //            Console.WriteLine("Enter 3 to Change Phone Number ");
-                //            Console.WriteLine("Enter 4 to Change Address ");
-                //            Console.WriteLine("Enter 5 to Change City ");
-                //            Console.WriteLine("Enter 6 to Change State ");
-                //            Console.WriteLine("Enter 7 to Change Pincode ");
-                //            Console.WriteLine("Enter 8 to Exit ");
-                            //int Check = Convert.ToInt32(Console.ReadLine());
-                            //switch (Check)
-                            //{
-                            //    case 1:
-                            //        Console.WriteLine("Enter the New First Name: ");
-                            //        person.FirstName = Console.ReadLine();
-                            //        break;
-                            //    case 2:
-                            //        Console.WriteLine("Enter the New Last Name: ");
-                            //        person.LastName = Console.ReadLine();
-                            //        break;
-                            //    case 3:
-                            //        Console.WriteLine("Enter the New Phone Number: ");
-                            //        person.PhoneNum = Console.ReadLine();
-                            //        break;
-                            //    case 4:
-                            //        Console.WriteLine("Enter the New Address: ");
-                            //        person.Addresses = Console.ReadLine();
-                            //        break;
-                            //    case 5:
-                            //        Console.WriteLine("Enter the New City: ");
-                            //        person.City = Console.ReadLine();
+        //Console.WriteLine("Enter the contact to modify:");
+        //string Modified = Console.ReadLine();
+        //foreach (var person in People)
+        //{
+        //    if (person.FirstName.ToUpper() == Modified.ToUpper())
+        //    {
+        //        while (true)
+        //        {
+        //            Console.WriteLine("Enter the option to modify the property: ");
+        //            Console.WriteLine("Enter 1 to Change First name ");
+        //            Console.WriteLine("Enter 2 to Change Last name ");
+        //            Console.WriteLine("Enter 3 to Change Phone Number ");
+        //            Console.WriteLine("Enter 4 to Change Address ");
+        //            Console.WriteLine("Enter 5 to Change City ");
+        //            Console.WriteLine("Enter 6 to Change State ");
+        //            Console.WriteLine("Enter 7 to Change Pincode ");
+        //            Console.WriteLine("Enter 8 to Exit ");
+        //int Check = Convert.ToInt32(Console.ReadLine());
+        //switch (Check)
+        //{
+        //    case 1:
+        //        Console.WriteLine("Enter the New First Name: ");
+        //        person.FirstName = Console.ReadLine();
+        //        break;
+        //    case 2:
+        //        Console.WriteLine("Enter the New Last Name: ");
+        //        person.LastName = Console.ReadLine();
+        //        break;
+        //    case 3:
+        //        Console.WriteLine("Enter the New Phone Number: ");
+        //        person.PhoneNum = Console.ReadLine();
+        //        break;
+        //    case 4:
+        //        Console.WriteLine("Enter the New Address: ");
+        //        person.Addresses = Console.ReadLine();
+        //        break;
+        //    case 5:
+        //        Console.WriteLine("Enter the New City: ");
+        //        person.City = Console.ReadLine();
         //                            break;
         //                        case 6:
         //                            Console.WriteLine("Enter the New State: ");
@@ -150,8 +151,8 @@ namespace AddressBooks
         //    Console.ReadKey();
         //}
 
-        //Removing the detail
-        public static void RemovePeople()
+            //Removing the detail
+            public static void RemovePeople()
         {
             Console.WriteLine("Enter the first name of the person you would like to remove.");
             string Remove = Console.ReadLine();
