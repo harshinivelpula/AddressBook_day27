@@ -2,8 +2,8 @@
 {
     class Program
     {
-      
-            public static Dictionary<string, List<AddrBook>> addressBook = new Dictionary<string, List<AddrBook>>();
+
+        public static Dictionary<string, List<AddrBook>> addressBook = new Dictionary<string, List<AddrBook>>();
         public static Dictionary<string, List<AddrBook>> City = new Dictionary<string, List<AddrBook>>();
         public static Dictionary<string, List<AddrBook>> State = new Dictionary<string, List<AddrBook>>();
         static void Main(string[] args)
