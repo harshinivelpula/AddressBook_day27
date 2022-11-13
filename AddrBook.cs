@@ -8,92 +8,85 @@ namespace AddressBooks
 {
     public class AddrBook
     {
-        public interface IAddressBookSystem
+        //Creating a dictionary for city and state
+        public static Dictionary<string, List<AddrBook>> City = new Dictionary<string, List<AddrBook>>();
+        public static Dictionary<string, List<AddrBook>> State = new Dictionary<string, List<AddrBook>>();
+        //Creating a list for city and state
+        public List<AddrBook> stateList;
+        public List<AddrBook> cityList;
+        public List<AddrBook> people;
+        //Default constrcutor
+        public AddrBook()
         {
-            void ListingPeople();
-            void RemovePeople();
+            people = new List<AddrBook>();
         }
-
-        internal static void RemovePeople()
+        //Instance Varaibles
+        public string firstName;
+        public string lastName;
+        public string address;
+        public string city;
+        public string state;
+        public string zipCode;
+        public string phoneNum;
+        public string emailId;
+        //Parameterized Constructor
+        public AddrBook(string firstName, string lastName, string phoneNum, string address, string city, string state, string zipCode, string emailId)
         {
-            throw new NotImplementedException();
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.phoneNum = phoneNum;
+            this.address = address;
+            this.city = city;
+            this.state = state;
+            this.zipCode = zipCode;
+            this.emailId = emailId;
+
         }
-
-        internal static void ListingPeople()
+        //ToString Method -to print the details
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            return "FisrtName: " + this.firstName + " Last Name: " + this.lastName + " Address: " + this.address + "  City: " + this.city + " State: " + this.state + " Pincode: " + this.zipCode + " Phone Number: " + this.phoneNum + " Email Id: " + this.emailId;
         }
-
-        public class AddrBook : IAddressBookSystem
+        //Getting the user details
+        public void GetCustomer(string firstName, string lastName, string phoneNum, string address, string city, string state, string zipCode, string emailId)
         {
-            public static Dictionary<string, List<AddrBook>> City = new Dictionary<string, List<AddrBook>>();
-            public static Dictionary<string, List<AddrBook>> State = new Dictionary<string, List<AddrBook>>();
-            public List<AddrBook> stateList;
-            public List<AddrBook> cityList;
-            public List<AddrBook> people;
-            public AddrBook()
+            int contact = 0;
+            AddrBook person;
+            if (contact == 0)
             {
-                people = new List<AddrBook>();
-            }
-            public string firstName;
-            public string lastName;
-            public string address;
-            public string city;
-            public string state;
-            public string zipCode;
-            public string phoneNum;
-            public string emailId;
-            public AddrBook(string firstName, string lastName, string address, string city, string state, string zip, string phoneNumber, string email)
-            {
-                this.firstName = firstName;
-                this.lastName = lastName;
-                this.address = address;
-                this.city = city;
-                this.state = state;
-                this.zipCode = zip;
-                this.phoneNum = phoneNumber;
-                this.emailId = email;
-
-            }
-            //Getting the user details
-            public void GetCustomer(string firstName, string lastName, string phoneNum, string address, string city, string state, string zipCode, string emailId)
-            {
-                int contact = 0;
-                AddrBook person = new AddrBook(firstName, lastName, phoneNum, address, city, state, zipCode, emailId);
-                if (contact == 0)
+                person = new AddrBook(firstName, lastName, phoneNum, address, city, state, zipCode, emailId);
+                people.Add(person);
+                if (State.ContainsKey(state))
                 {
-                    people.Add(person);
-                    if (State.ContainsKey(state))
-                    {
-                        List<AddrBook> existing = State[state];
-                        existing.Add(person);
+                    List<AddrBook> existing = State[state];
+                    existing.Add(person);
 
-                    }
-                    else
-                    {
-                        stateList = new List<AddrBook>();
-                        stateList.Add(person);
-                        State.Add(state, stateList);
-
-                    }
-                    if (City.ContainsKey(city))
-                    {
-                        List<AddrBook> existing = City[city];
-                        existing.Add(person);
-
-                    }
-                    else
-                    {
-                        cityList = new List<AddrBook>();
-                        cityList.Add(person);
-                        City.Add(city, cityList);
-
-                    }
-                    contact++;
                 }
-                else if (contact != 0)
+                else
                 {
-                    //Checking duplicates
+                    stateList = new List<AddrBook>();
+                    stateList.Add(person);
+                    State.Add(state, stateList);
+
+                }
+                if (City.ContainsKey(city))
+                {
+                    List<AddrBook> existing = City[city];
+                    existing.Add(person);
+
+                }
+                else
+                {
+                    cityList = new List<AddrBook>();
+                    cityList.Add(person);
+                    City.Add(city, cityList);
+
+                }
+                contact++;
+
+            else if (contact != 0)
+                {
+                    //Checking duplicates using lambda function-UC7
                     AddrBook addressBookSystems = people.Find(x => x.firstName.Equals(firstName));
                     if (addressBookSystems == null)
                     {
@@ -241,15 +234,16 @@ namespace AddressBooks
                 AddrBook person = people.FirstOrDefault(x => x.firstName.ToUpper() == firstName.ToUpper());
                 if (person == null)
                 {
-                    Console.WriteLine("That person could not be found..");
+                    Console.WriteLine("\nThat person could not be found..");
 
                     return;
                 }
-                Console.WriteLine("Are you sure you want to remove this person from your address book? (Y/N)");
+                Console.WriteLine("\nAre you sure you want to remove this person from your address book? (Y/N)");
                 if (Console.ReadKey().Key == ConsoleKey.Y)
                 {
                     people.Remove(person);
                     Console.WriteLine("\nPerson removed ");
+
                 }
             }
             //Display Person names found in given City
@@ -258,7 +252,7 @@ namespace AddressBooks
                 List<AddrBook> CityList = cityList.FindAll(a => a.city.ToLower() == city);
                 foreach (var i in CityList)
                 {
-                    Console.WriteLine("Found person \"{0}\" in Address Book \"{1}\" , residing in City {2}", i.firstName, key, i.city);
+                    Console.WriteLine("\nFound person \"{0}\" in Address Book \"{1}\" , residing in City {2}\n", i.firstName, key, i.city);
                 }
             }
             //Display Person names found in given State
@@ -267,9 +261,10 @@ namespace AddressBooks
                 List<AddrBook> StateList = stateList.FindAll(x => x.state.ToLower() == state);
                 foreach (var i in StateList)
                 {
-                    Console.WriteLine("Found person \"{0}\" in Address Book \"{1}\" , residing in State {2}", i.firstName, key, i.state);
+                    Console.WriteLine("\nFound person \"{0}\" in Address Book \"{1}\" , residing in State {2}\n", i.firstName, key, i.state);
                 }
             }
+            //Displaying city list or state list
             public static void DisplayCityorState()
             {
                 Console.WriteLine("Enter 1-To view City list\n Enter 2-To view State list");
@@ -278,13 +273,14 @@ namespace AddressBooks
                 {
                     foreach (var i in City)
                     {
-                        Console.WriteLine("Display List for City: {0}\n", i.Key);
+                        Console.WriteLine("\nDisplay List for City: {0}\n", i.Key);
                         foreach (var j in i.Value)
                         {
-                            Console.WriteLine("Found person \"{0} {1}\" , residing in City {2}", j.firstName, j.lastName, j.city);
+                            Console.WriteLine("\nFound person \"{0} {1}\" , residing in City {2}", j.firstName, j.lastName, j.city);
                         }
 
-
+                        //Get no of count persons based on city
+                        Console.WriteLine("\nCount of people in City is: {0}", i.Value.Count);
                     }
                 }
                 else
@@ -294,65 +290,143 @@ namespace AddressBooks
                         Console.WriteLine("Display List for State: {0}\n", a.Key);
                         foreach (var b in a.Value)
                         {
-                            Console.WriteLine("Found person \"{0} {1}\" , residing in State {2}", b.firstName, b.lastName, b.state);
+                            Console.WriteLine("\nFound person \"{0} {1}\" , residing in State {2}\n", b.firstName, b.lastName, b.state);
                         }
+
+                        //Get no of count persons based on state
+                        Console.WriteLine("\nCount of people in State is: {0}\n", a.Value.Count);
+
                     }
                 }
 
             }
-        }
-
-        internal void GetCustomer(string? firstName, string? lastName, string? phoneNumber, string? addresses, string? city, string? state, string? zipCode, string? emailId)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void Modify()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void StoreCityList(string key, List<AddressBooks.AddrBook> value, string? city)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void StoreStateList(string key, List<AddressBooks.AddrBook> value, string? state)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void DisplayCityorState()
-        {
-            Console.WriteLine("Enter 1-To view City list\n Enter 2-To view State list");
-            int citystate = Convert.ToInt32(Console.ReadLine());
-            if (citystate == 1)
+            //Sort the contact details in address book based on firstname
+            public static void SortContactPerson(Dictionary<string, List<AddrBook>> addressBook)
             {
-                foreach (var i in City)
+
+                SortedList<string, AddrBook> sorted;
+                foreach (KeyValuePair<string, List<AddrBook>> kvp in addressBook)
                 {
-                    Console.WriteLine("Display List for City: {0}\n", i.Key);
-                    foreach (var j in i.Value)
+                    Console.WriteLine("\n--------Displaying sorted Contact Person Details in address book: {0}-------\n", kvp.Key);
+                    sorted = new SortedList<string, AddrBook>();
+                    foreach (var member in kvp.Value)
                     {
-                        Console.WriteLine("Found person \"{0} {1}\" , residing in City {2}", j.firstName, j.lastName, j.city);
+                        sorted.Add(member.firstName, member);
                     }
+                    foreach (var member in sorted)
+                    {
+                        Console.WriteLine(member.Value.ToString());
 
-
+                    }
                 }
             }
-            else
+            //sorts based on city name
+            public static void SortBasedOnCity(Dictionary<string, List<AddrBook>> addressBook)
             {
-                foreach (var a in State)
+
+                SortedList<string, AddrBook> sorted;
+                foreach (KeyValuePair<string, List<AddrBook>> kvp in addressBook)
                 {
-                    Console.WriteLine("Display List for State: {0}\n", a.Key);
-                    foreach (var b in a.Value)
+                    Console.WriteLine("\n--------Displaying Sorted contact based on city  in address book: {0}-------\n", kvp.Key);
+                    sorted = new SortedList<string, AddrBook>();
+                    foreach (var member in kvp.Value)
                     {
-                        Console.WriteLine("Found person \"{0} {1}\" , residing in State {2}", b.firstName, b.lastName, b.state);
+                        sorted.Add(member.city, member);
+                    }
+                    foreach (var member in sorted)
+                    {
+                        Console.WriteLine(member.Value.ToString());
+
                     }
 
                 }
             }
+            //sorts based on State name
+            public static void SortBasedOnState(Dictionary<string, List<AddrBook>> addressBook)
+            {
 
+                SortedList<string, AddrBook> sorted;
+                foreach (KeyValuePair<string, List<AddrBook>> kvp in addressBook)
+                {
+                    Console.WriteLine("\n--------Displaying Sorted contact based on State  in address book: {0}-------\n", kvp.Key);
+                    sorted = new SortedList<string, AddrBook>();
+                    foreach (var member in kvp.Value)
+                    {
+                        sorted.Add(member.state, member);
+                    }
+                    foreach (var member in sorted)
+                    {
+                        Console.WriteLine(member.Value.ToString());
+
+                    }
+
+                }
+            }
+            //sorts based on zipcode
+            public static void SortBasedOnZipCode(Dictionary<string, List<AddrBook>> addressBook)
+            {
+
+                SortedList<string, AddrBook> sorted;
+                foreach (KeyValuePair<string, List<AddrBook>> kvp in addressBook)
+                {
+                    Console.WriteLine("\n--------Displaying Sorted contact based on State  in address book: {0}-------\n", kvp.Key);
+                    sorted = new SortedList<string, AddrBook>();
+                    foreach (var member in kvp.Value)
+                    {
+                        sorted.Add(member.zipCode, member);
+                    }
+                    foreach (var member in sorted)
+                    {
+                        Console.WriteLine(member.Value.ToString());
+
+                    }
+                }
+            }
 
         }
     }
+    //sorts based on State name
+    public static void SortBasedOnState(Dictionary<string, List<AddrBook>> addressBook)
+    {
+
+        SortedList<string, AddrBook> sorted;
+        foreach (KeyValuePair<string, List<AddrBook>> kvp in addressBook)
+        {
+            Console.WriteLine("\n--------Displaying Sorted contact based on State  in address book: {0}-------\n", kvp.Key);
+            sorted = new SortedList<string, AddrBook>();
+            foreach (var member in kvp.Value)
+            {
+                sorted.Add(member.state, member);
+            }
+            foreach (var member in sorted)
+            {
+                Console.WriteLine(member.Value.ToString());
+
+            }
+
+        }
+    }
+    //sorts based on zipcode
+    public static void SortBasedOnZipCode(Dictionary<string, List<AddrBook>> addressBook)
+    {
+        SortedList<string, AddrBook> sorted;
+        foreach (KeyValuePair<string, List<AddrBook>> kvp in addressBook)
+        {
+            Console.WriteLine("\n--------Displaying Sorted contact based on State  in address book: {0}-------\n", kvp.Key);
+            sorted = new SortedList<string, AddrBook>();
+            foreach (var member in kvp.Value)
+            {
+                sorted.Add(member.zipCode, member);
+            }
+            foreach (var member in sorted)
+            {
+                Console.WriteLine(member.Value.ToString());
+
+            }
+        }
+    }
+
+
 }
+           
+                   
