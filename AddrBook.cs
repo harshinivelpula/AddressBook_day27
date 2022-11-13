@@ -302,14 +302,57 @@ namespace AddressBooks
             }
         }
 
-        internal static void GetCustomer()
+        internal void GetCustomer(string? firstName, string? lastName, string? phoneNumber, string? addresses, string? city, string? state, string? zipCode, string? emailId)
         {
             throw new NotImplementedException();
         }
 
-        internal static void Modify()
+        internal void Modify()
         {
             throw new NotImplementedException();
+        }
+
+        internal static void StoreCityList(string key, List<AddressBooks.AddrBook> value, string? city)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void StoreStateList(string key, List<AddressBooks.AddrBook> value, string? state)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void DisplayCityorState()
+        {
+            Console.WriteLine("Enter 1-To view City list\n Enter 2-To view State list");
+            int citystate = Convert.ToInt32(Console.ReadLine());
+            if (citystate == 1)
+            {
+                foreach (var i in City)
+                {
+                    Console.WriteLine("Display List for City: {0}\n", i.Key);
+                    foreach (var j in i.Value)
+                    {
+                        Console.WriteLine("Found person \"{0} {1}\" , residing in City {2}", j.firstName, j.lastName, j.city);
+                    }
+
+
+                }
+            }
+            else
+            {
+                foreach (var a in State)
+                {
+                    Console.WriteLine("Display List for State: {0}\n", a.Key);
+                    foreach (var b in a.Value)
+                    {
+                        Console.WriteLine("Found person \"{0} {1}\" , residing in State {2}", b.firstName, b.lastName, b.state);
+                    }
+
+                }
+            }
+
+            
         }
     }
 }
