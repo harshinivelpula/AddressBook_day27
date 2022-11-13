@@ -6,8 +6,9 @@
         {
 
             //AddressBooks.AddrBook.GetCustomer();
-            AddressBooks.AddrBook.Modify();
+            //AddressBooks.AddrBook.Modify();
             //AddressBooks.AddrBook.ListingPeople();
+            AddressBooks.AddrBook.RemovePeople();
 
         }
     }
