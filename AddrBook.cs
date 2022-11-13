@@ -9,7 +9,16 @@ namespace AddressBooks
     internal class AddrBook
     {
         public static List<Person> People = new List<Person>();
-
+      
+        public static Dictionary<string, List<AddrBook>> City = new Dictionary<string, List<AddrBook>>();
+        public static Dictionary<string, List<AddrBook>> State = new Dictionary<string, List<AddrBook>>();
+        public List<AddrBook> stateList;
+        public List<AddrBook> cityList;
+        public List<AddrBook> people;
+        public AddrBook()
+        {
+            people = new List<AddrBook>();
+        }
         public class Person
         {
             public string FirstName { get; set; }
@@ -151,30 +160,70 @@ namespace AddressBooks
         //    Console.ReadKey();
         //}
 
-            //Removing the detail
-            public static void RemovePeople()
+        //Removing the detail
+        //public static void RemovePeople()
+        //{
+        //    Console.WriteLine("Enter the first name of the person you would like to remove.");
+        //    string Remove = Console.ReadLine();
+        //    foreach (var person in People.ToList())
+        //    {
+        //        if (person.FirstName.ToUpper() == Remove.ToUpper())
+        //        {
+        //            People.Remove(person);
+        //            Console.WriteLine("Contact is deleted");
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Contact is not present");
+        //        }
+        //    }
+        //    //  PrintCustomer(person);
+
+        //    if (Console.ReadKey().Key == ConsoleKey.Y)
+        //    {
+        //        people.Remove(person);
+        //        Console.WriteLine("\nPerson removed ");
+
+        //    }
+        //}
+
+        //Removing the field using Lambda Function
+        public void RemovePeople()
         {
             Console.WriteLine("Enter the first name of the person you would like to remove.");
-            string Remove = Console.ReadLine();
-            foreach (var person in People.ToList())
+            string firstName = Console.ReadLine();
+            AddrBook person = people.FirstOrDefault(x => x.firstName.ToUpper() == firstName.ToUpper());
+            if (person == null)
             {
-                if (person.FirstName.ToUpper() == Remove.ToUpper())
-                {
-                    People.Remove(person);
-                    Console.WriteLine("Contact is deleted");
-                }
-                else
-                {
-                    Console.WriteLine("Contact is not present");
-                }
-            }
-            //  PrintCustomer(person);
+                Console.WriteLine("That person could not be found..");
 
+                return;
+            }
+            Console.WriteLine("Are you sure you want to remove this person from your address book? (Y/N)");
             if (Console.ReadKey().Key == ConsoleKey.Y)
             {
                 people.Remove(person);
                 Console.WriteLine("\nPerson removed ");
 
+            }
+        }
+
+        //search Person in a City or State
+        public static void StoreCityList(string key, List<AddrBook> cityList, string city)
+        {
+            List<AddrBook> CityList = cityList.FindAll(a => a.city.ToLower() == city);
+            foreach (var i in CityList)
+            {
+                Console.WriteLine("Found person \"{0}\" in Address Book \"{1}\" , residing in City {2}", i.firstName, key, i.city);
+            }
+        }
+        //Display Person names found in given State
+        public static void StoreStateList(string key, List<AddrBook> stateList, string state)
+        {
+            List<AddrBook> StateList = stateList.FindAll(x => x.state.ToLower() == state);
+            foreach (var i in StateList)
+            {
+                Console.WriteLine("Found person \"{0}\" in Address Book \"{1}\" , residing in State {2}", i.firstName, key, i.state);
             }
         }
     }
