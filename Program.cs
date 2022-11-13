@@ -3,6 +3,7 @@
     class Program
     {
 
+        //Creating a dictionary for city,state aand person details
         public static Dictionary<string, List<AddrBook>> addressBook = new Dictionary<string, List<AddrBook>>();
         public static Dictionary<string, List<AddrBook>> City = new Dictionary<string, List<AddrBook>>();
         public static Dictionary<string, List<AddrBook>> State = new Dictionary<string, List<AddrBook>>();
@@ -24,6 +25,7 @@
                 while (noOfContact > 0)
                 {
                     Console.WriteLine("Enter the details of contact to be added: ");
+                    //Getting the user details
 
                     Console.Write("Enter First Name: ");
                     string FirstName = Console.ReadLine();
@@ -48,15 +50,16 @@
 
                     Console.Write("Enter EmailId: ");
                     string EmailId = Console.ReadLine();
+                    //Calling the getcustomer method and store it dictionary
                     addrBook.GetCustomer(FirstName, LastName, PhoneNumber, Addresses, City, State, ZipCode, EmailId);
                     noOfContact--;
-                    //addressBook.Add(addressbookname, addrBook.people);
                     Console.WriteLine(" ");
+                    //Print the details
                     addrBook.ListingPeople();
                 }
                 Console.WriteLine("1.To modify the details");
                 Console.WriteLine("2.To remove the details");
-                Console.WriteLine("3.city or state");
+                Console.WriteLine("3.Exit from loop");
                 int option = Convert.ToInt32(Console.ReadLine());
                 switch (option)
                 {
@@ -70,68 +73,103 @@
                         Console.WriteLine(" ");
                         addrBook.ListingPeople();
                         break;
-                    case 3:
-                        Console.WriteLine("Enter 1-To Search a person through a City");
-                        Console.WriteLine("Enter 2-To Search a person through a State");
-                        Console.WriteLine("Enter 3-To view a person by state list or city list");
-                        int opt = Convert.ToInt32(Console.ReadLine());
-                        switch (opt)
-                        {
-                            case 1:
-                                SearchAddress(opt);
-                                break;
-                            case 2:
-                                SearchAddress(opt);
-                                break;
-                            case 3:
-                                AddrBook.DisplayCityorState();
-
-                                break;
-                            default:
-                                Console.WriteLine("Invalid Option!");
-                                break;
-                        }
-                        break;
                 }
+                //Checking the address book name is already exist or not
                 if (addressBook.ContainsKey(addressbookname))
                 {
                     Console.WriteLine("Existing address book name");
                     return;
                 }
+                //If not add it in dictionary
                 else
                 {
                     addressBook.Add(addressbookname, addrBook.people);
                 }
+
                 noOfBooks++;
+
+                //Displaying the address book names
                 foreach (KeyValuePair<string, List<AddrBook>> addr in addressBook)
                 {
                     Console.WriteLine("The address Books are:{0}", addr.Key);
 
                 }
-            }
-            static void SearchAddress(int option)
-            {
-                string city, state;
-                if (option == 1)
-                {
-                    Console.WriteLine("Enter the City Name");
-                    city = Console.ReadLine();
-                    foreach (KeyValuePair<string, List<AddrBook>> kvp in addressBook)
-                    {
-                        AddrBook.StoreCityList(kvp.Key, kvp.Value, city);
+                //Searching and sorting operations based on city,state,name,zipcode
 
-                    }
-                    if (option == 2)
+                Console.WriteLine("Enter 1-To Search a person through a City");
+                Console.WriteLine("Enter 2-To Search a person through a State");
+                Console.WriteLine("Enter 3-To view a person by state list or city list");
+                Console.WriteLine("Enter 4-Sort Contact People");
+                Console.WriteLine("Enter 5-Sort based on city");
+                Console.WriteLine("Enter 6-Sort based on State");
+                Console.WriteLine("Enter 7-Sort based on zipcode");
+                Console.WriteLine("Enter 8-To write a data in file");
+                Console.WriteLine("Enter 9-To read a data in file");
+
+                int opt = Convert.ToInt32(Console.ReadLine());
+
+                switch (opt)
+                {
+                    case 1:
+                        SearchAddress(opt);
+                        break;
+                    case 2:
+                        SearchAddress(opt);
+                        break;
+                    case 3:
+                        AddrBook.DisplayCityorState();
+                        break;
+                    case 4:
+                        AddrBook.SortContactPerson(addressBook);
+                        break;
+                    case 5:
+                        AddrBook.SortBasedOnCity(addressBook);
+                        break;
+                    case 6:
+                        AddrBook.SortBasedOnState(addressBook);
+                        break;
+                    case 7:
+                        AddrBook.SortBasedOnZipCode(addressBook);
+                        break;
+                    case 8:
+                        FileOperations.WriteInFile(addressBook);
+                        break;
+                    case 9:
+                        FileOperations.ReadAddressBook();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Option!");
+                        break;
+                }
+                //Search the person through city or state
+                static void SearchAddress(int option)
+                {
+                    string city, state;
+                    if (option == 1)
                     {
                         Console.WriteLine("Enter the City Name");
-                        state = Console.ReadLine();
+                        city = Console.ReadLine();
                         foreach (KeyValuePair<string, List<AddrBook>> kvp in addressBook)
                         {
-                            AddrBook.StoreStateList(kvp.Key, kvp.Value, state);
+                            AddrBook.StoreCityList(kvp.Key, kvp.Value, city);
+
+                        }
+                        if (option == 2)
+                        {
+                            Console.WriteLine("Enter the City Name");
+                            state = Console.ReadLine();
+                            foreach (KeyValuePair<string, List<AddrBook>> kvp in addressBook)
+                            {
+                                AddrBook.StoreStateList(kvp.Key, kvp.Value, state);
+                            }
                         }
                     }
                 }
             }
         }
     }
+
 }
+
+
+
